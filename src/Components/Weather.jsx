@@ -1,6 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import Clouds from "/src/assets/icons/clouds.png";
+import Humidity from "/src/assets/icons/humidity.png";
+import Pressure from "/src/assets/icons/pressure.png"
+import PlaceHolder from "/src/assets/icons/placeholder.png";
+import Wind from "/src/assets/icons/wind.png";
 
 const Weather = () => {
   const [weatherApi, setWeatherApi] = useState({});
@@ -32,7 +37,7 @@ const Weather = () => {
     <div className='general_container'>
       <div className='header_weather'>
         <h1>Wheather App</h1>
-        <h2><img src="../src/assets/icons/placeholder.png" alt="placeholderIcon" /> {weatherApi.name}, {weatherApi.sys?.country}</h2>
+        <h2><img src={PlaceHolder} alt="placeholderIcon" /> {weatherApi.name}, {weatherApi.sys?.country}</h2>
       </div>
       <div className="container_columns">
         <div className='first_column'>
@@ -42,10 +47,10 @@ const Weather = () => {
         <div className='second_column'>
           <h3>{weatherApi.weather?.[0].main}</h3>
           <div className="weatherCharacteristics">
-            <h3><img src="../src/assets/icons/wind.png" alt="windIcon" /> Wind Speed: {weatherApi.wind?.speed} m/s</h3>
-            <h3><img src="../src/assets/icons/clouds.png" alt="cloudsIcon" /> Clouds: {weatherApi.clouds?.all}%</h3>
-            <h3><img src="../src/assets/icons/pressure.png" alt="pressureIcon" /> Pressure: {weatherApi.main?.pressure} mb</h3>
-            <h3><img src="../src/assets/icons/humidity.png" alt="humidityIcon" /> Humidity: {weatherApi.main?.humidity} mb</h3>
+            <h3><img src={Wind} alt="windIcon" /> Wind Speed: {weatherApi.wind?.speed} m/s</h3>
+            <h3><img src={Clouds} alt="cloudsIcon" /> Clouds: {weatherApi.clouds?.all}%</h3>
+            <h3><img src={Pressure} alt="pressureIcon" /> Pressure: {weatherApi.main?.pressure} mb</h3>
+            <h3><img src={Humidity} alt="humidityIcon" /> Humidity: {weatherApi.main?.humidity} mb</h3>
           </div>
         </div>
       </div>
