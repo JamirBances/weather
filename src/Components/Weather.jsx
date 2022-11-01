@@ -56,7 +56,7 @@ const Weather = () => {
       </div>
       <div className="footer">
         <button onClick={clickToChangeDegree}>Change degrees °C / °F</button>
-        <h5>Made with ❤️ by: Jamir Bances</h5>
+        <h5>— Made with ❤️ by: Jamir Bances —</h5>
       </div>
     </div>
   );
