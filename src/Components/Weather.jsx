@@ -6,59 +6,52 @@ import Humidity from "/src/assets/icons/humidity.png";
 import Pressure from "/src/assets/icons/pressure.png"
 import PlaceHolder from "/src/assets/icons/placeholder.png";
 import Wind from "/src/assets/icons/wind.png";
+import useApi from '../Hooks/useApi';
 
 const Weather = () => {
-  const [weatherApi, setWeatherApi] = useState({});
 
-  useEffect(() => {
-
-    const success = pos => {
-      const lat = pos.coords.latitude
-      const lon = pos.coords.longitude
-      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=0630f8067a6cee1fa9f70fb86705bd92`)
-        .then(res => setWeatherApi(res.data));
-    }
-
-    navigator.geolocation.getCurrentPosition(success);
-  }, [])
-
-  console.log(weatherApi);
-
+  const {weatherApi, isLoading} = useApi();
   const [changeDegrees, setChangeDegrees] = useState(true);
 
+  const celciusDegree = Math.round(weatherApi.main?.temp-273.15);
+  const farenheitDegree = Math.round(weatherApi.main?.temp-273.15) * 9/5 + 32;
+  
   const clickToChangeDegree = () => {
     setChangeDegrees(!changeDegrees)
   };
 
-  const celciusDegree = Math.round(weatherApi.main?.temp-273.15);
-  const farenheitDegree = Math.round(weatherApi.main?.temp-273.15) * 9/5 + 32;
-
   return (
-    <div className='general_container'>
-      <div className='header_weather'>
-        <h1>Wheather App</h1>
-        <h2><img src={PlaceHolder} alt="placeholderIcon" /> {weatherApi.name}, {weatherApi.sys?.country}</h2>
-      </div>
-      <div className="container_columns">
-        <div className='first_column'>
-          <img src={`http://openweathermap.org/img/wn/${weatherApi.weather?.[0].icon}@2x.png`} alt="imageWeather" />
-          <h3>{`${changeDegrees ? celciusDegree : farenheitDegree} ${changeDegrees ? "°C" : "°F"}`}</h3>
-        </div>
-        <div className='second_column'>
-          <h3>{weatherApi.weather?.[0].main}</h3>
-          <div className="weatherCharacteristics">
-            <h3><img src={Wind} alt="windIcon" /> Wind Speed: {weatherApi.wind?.speed} m/s</h3>
-            <h3><img src={Clouds} alt="cloudsIcon" /> Clouds: {weatherApi.clouds?.all}%</h3>
-            <h3><img src={Pressure} alt="pressureIcon" /> Pressure: {weatherApi.main?.pressure} mb</h3>
-            <h3><img src={Humidity} alt="humidityIcon" /> Humidity: {weatherApi.main?.humidity} mb</h3>
+    <>
+      {isLoading ? (
+        <h1>Is loading...</h1>
+      ):(
+        <div className='general_container'>
+          <div className='header_weather'>
+            <h1>Wheather App</h1>
+            <h2><img src={PlaceHolder} alt="placeholderIcon" /> {weatherApi.name}, {weatherApi.sys?.country}</h2>
+          </div>
+          <div className="container_columns">
+            <div className='first_column'>
+              <img src={`http://openweathermap.org/img/wn/${weatherApi.weather?.[0].icon}@2x.png`} alt="imageWeather" />
+              <h3>{`${changeDegrees ? celciusDegree : farenheitDegree} ${changeDegrees ? "°C" : "°F"}`}</h3>
+            </div>
+            <div className='second_column'>
+              <h3>{weatherApi.weather?.[0].main}</h3>
+              <div className="weatherCharacteristics">
+                <h3><img src={Wind} alt="windIcon" /> Wind Speed: {weatherApi.wind?.speed} m/s</h3>
+                <h3><img src={Clouds} alt="cloudsIcon" /> Clouds: {weatherApi.clouds?.all}%</h3>
+                <h3><img src={Pressure} alt="pressureIcon" /> Pressure: {weatherApi.main?.pressure} mb</h3>
+                <h3><img src={Humidity} alt="humidityIcon" /> Humidity: {weatherApi.main?.humidity} mb</h3>
+              </div>
+            </div>
+          </div>
+          <div className="footer">
+            <button onClick={clickToChangeDegree}>Change degrees °C / °F</button>
+            <h5>— Made with ❤️ by: Jamir Bances —</h5>
           </div>
         </div>
-      </div>
-      <div className="footer">
-        <button onClick={clickToChangeDegree}>Change degrees °C / °F</button>
-        <h5>— Made with ❤️ by: Jamir Bances —</h5>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
