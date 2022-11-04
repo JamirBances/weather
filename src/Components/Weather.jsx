@@ -7,15 +7,15 @@ import Pressure from "/src/assets/icons/pressure.png"
 import PlaceHolder from "/src/assets/icons/placeholder.png";
 import Wind from "/src/assets/icons/wind.png";
 import useApi from '../Hooks/useApi';
+import Loading from './Loading';
 
 const Weather = () => {
-
   const {weatherApi, isLoading} = useApi();
   const [changeDegrees, setChangeDegrees] = useState(true);
 
   const celciusDegree = Math.round(weatherApi.main?.temp-273.15);
   const farenheitDegree = Math.round(weatherApi.main?.temp-273.15) * 9/5 + 32;
-  
+
   const clickToChangeDegree = () => {
     setChangeDegrees(!changeDegrees)
   };
@@ -23,7 +23,8 @@ const Weather = () => {
   return (
     <>
       {isLoading ? (
-        <h1>Is loading...</h1>
+        <Loading/>
+        /* {useLoading} */
       ):(
         <div className='general_container'>
           <div className='header_weather'>
