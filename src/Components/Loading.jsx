@@ -39,7 +39,7 @@ const Loading = () => {
           <span className='drop'></span>
         </div>
         
-        <div className='text'>
+        <div className='text' style={{textShadow: "0px 0px 5px #000000", color: "white"}}>
           LOOKING OUTSIDE FOR YOU... ONE SEC
         </div>
       </div>
